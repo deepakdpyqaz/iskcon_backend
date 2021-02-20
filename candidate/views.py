@@ -110,7 +110,7 @@ def profile(request):
             return Response({"Error":"Not in session"})
         candidateserializer=CandidateSerializer(candidate)
         data={"Error":False}
-        data.update(candidateserializer.data)
+        data={"candidate":candidateserializer.data}
         return Response(data)
     else:
         candidate = checkSession(request, "candidate")
@@ -126,8 +126,10 @@ def profile(request):
             candidate.country = request.data['country']
             candidate.city = request.data['city']
             candidate.password=request.data['password']
+            candidateserializer=CandidateSerializer(candidate)
+            data={"Error":False,"candidate":candidateserializer.data}
             candidate.save()
-            return Response({"Error":False})
+            return Response(data)
         except:
             return Response({"Error":True})
 
@@ -155,7 +157,8 @@ def lectures(request):
             data.append(level_data)
         except:
             pass
-    return Response(data)
+    params={'Error':False,"data":data}
+    return Response(params)
     
 
 

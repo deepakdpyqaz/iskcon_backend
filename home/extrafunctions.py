@@ -21,7 +21,10 @@ def genText(length):
 
 def checkSession(request,user,**type):
     try:
-        authtoken=request.data['authtoken']
+        if(request.method=="GET"):
+            authtoken=request.query_params['authtoken']
+        else:
+            authtoken=request.data['authtoken']
         if(user=="candidate"):
             candidate=Loggedin.objects.filter(authtoken=authtoken)[0]
             candidate=Candidate.objects.filter(phone=candidate.phone.phone).first()
