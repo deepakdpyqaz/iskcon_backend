@@ -12,6 +12,8 @@ from django.utils.html import strip_tags
 from django.template import loader
 from django.template.loader import render_to_string
 from iskcon_backend.settings import EMAIL_HOST_USER
+
+
 # Create your views here.
 @api_view(['POST'])
 def login(request):
@@ -37,7 +39,7 @@ def login(request):
         person_new.save()
         return Response({"Error":False,"authtoken":authtoken})
 
-@api_view(['POST'])
+@api_view(['GET','POST'])
 def verify(request):
     try:
         phone=request.data['phone']
@@ -70,7 +72,6 @@ def verify(request):
     plain_message = strip_tags(html_message)
     send_mail('Isckon verification', plain_message, EMAIL_HOST_USER,[email], html_message=html_message, fail_silently=False)
     return Response({"Error":False,"authtoken":authtoken})
-
 
 @api_view(['POST'])
 def register(request):
@@ -106,7 +107,6 @@ def register(request):
         for cand in candidate:
             cand.delete()
         return Response({"Error":True})
-
 
 @api_view(['GET','POST'])
 def profile(request):
