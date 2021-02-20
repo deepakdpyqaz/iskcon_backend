@@ -1,1 +1,1 @@
-web: gunicorn iskcon.wsgi
+web: gunicorn iskcon_backend.wsgi
