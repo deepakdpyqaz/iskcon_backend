@@ -7,6 +7,11 @@ from manager.models import Level, Lecture
 from django.db.models import Q
 from candidate.serializer import CandidateSerializer
 from manager.serializer import LectureSerializer
+from django.core.mail import send_mail
+from django.utils.html import strip_tags
+from django.template import loader
+from django.template.loader import render_to_string
+from iskcon_backend.settings import EMAIL_HOST_USER
 # Create your views here.
 @api_view(['POST'])
 def login(request):
@@ -61,8 +66,9 @@ def verify(request):
     except:
         return Response({"Error":"Mail or phone is already registered"})
 
-    # logic of sending the otp
-
+    html_message = render_to_string('mail/otp.html', {'name': name, 'otp': otp})
+    plain_message = strip_tags(html_message)
+    send_mail('Isckon verification', plain_message, EMAIL_HOST_USER,[email], html_message=html_message, fail_silently=False)
     return Response({"Error":False,"authtoken":authtoken})
 
 
