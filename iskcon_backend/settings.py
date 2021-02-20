@@ -25,7 +25,7 @@ SECRET_KEY = '7@xmt(1vvj&p%$u#rbjoc8@bq51tb9hfyn5_u^fxpma2h8yctj'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["iskconbackend.herokuapp.com","localhost","127.0.0.1"]
 
 
 # Application definition
